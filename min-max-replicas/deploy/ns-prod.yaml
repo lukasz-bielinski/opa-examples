@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    replicas-min: "4"
+    replicas-max: "10"
+  name: production

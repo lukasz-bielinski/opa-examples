@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    replicas-min: "3"
+    replicas-max: "7"
+  name: test

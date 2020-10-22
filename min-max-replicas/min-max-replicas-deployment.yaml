@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredDeploymentReplicas
+metadata:
+  name: min-max-replicas-deployment
+spec:
+  match:
+    kinds:
+      - apiGroups: ["*"]
+        kinds: ["Deployment"]
