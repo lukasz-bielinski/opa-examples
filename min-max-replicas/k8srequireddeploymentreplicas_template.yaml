@@ -18,20 +18,20 @@ spec:
       rego: |
         package k8srequireddeploymentreplicas
 
-        violation[{"msg": msg, "details": {"Required number of replicas ": required}}] {
+        violation[{"msg": msg, "details": {}}] {
           namespace := input.review.object.metadata.namespace
           required := to_number( data.inventory.cluster["v1"].Namespace[namespace]["metadata"]["annotations"]["replicas-min"])
           input.review.object.kind == "Deployment"
           provided := input.review.object.spec.replicas
           required > provided
-          msg := sprintf("Forbidden number of replicas: %v", [provided])
+          msg := sprintf("Forbidden number of replicas: %v, Minimum number of replicas allowed: %v", [provided, required])
         }
 
-        violation[{"msg": msg, "details": {"Required number of replicas ": required}}] {
+        violation[{"msg": msg, "details": {}}] {
           namespace := input.review.object.metadata.namespace
           required := to_number( data.inventory.cluster["v1"].Namespace[namespace]["metadata"]["annotations"]["replicas-max"])
           input.review.object.kind == "Deployment"
           provided := input.review.object.spec.replicas
           required < provided
-          msg := sprintf("Forbidden number of replicas: %v", [provided])
+          msg := sprintf("Forbidden number of replicas: %v, Maximum number of replicas allowed: %v", [provided, required])
         }
